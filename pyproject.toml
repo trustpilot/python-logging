@@ -1,9 +1,11 @@
 [tool.poetry]
 name = "trustpilot-logging"
-version = "1.0.0"
+version = "1.0.1"
 description = "oppinionated json logger"
 authors = ["sloev <johanned.valbjorn@gmail.com>","Zakaria Zajac <zak@madzak.com>"]
 license = "BSD-2-Clause"
+readme = "README.md"
+repository = "https://github.com/trustpilot/python-logging"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
