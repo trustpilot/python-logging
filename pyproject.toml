@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "trustpilot-json-logging"
-version = "1.0.6"
+version = "1.0.7"
 description = "oppinionated json logger"
 authors = ["sloev <johanned.valbjorn@gmail.com>","Zakaria Zajac <zak@madzak.com>"]
 license = "BSD-2-Clause"

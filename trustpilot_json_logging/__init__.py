@@ -11,6 +11,15 @@ class JSONFormatter(jsonlogger.JsonFormatter):
         log_record["Severity"] = record.levelname
 
 
+def format_level(level):
+    if isinstance(level, str):
+        if level.isnumeric():
+            level = int(level)
+        else:
+            level = level.upper()
+    return level
+
+
 def setup_logging(level="INFO", output=sys.stdout, ignore=None):
     """
     Removes all existing log_handlers and sets up json logger
@@ -23,7 +32,9 @@ def setup_logging(level="INFO", output=sys.stdout, ignore=None):
 
     setup_logging("INFO", sys.stderr, ignore={"elasticsearch":"WARNING"})
     """
+    level = format_level(level)
     ignore = ignore or {}
+
 
     logger = logging.getLogger()
     for h in logger.handlers:
@@ -36,6 +47,8 @@ def setup_logging(level="INFO", output=sys.stdout, ignore=None):
     logger.addHandler(log_handler)
 
     for path, level in ignore.items():
+        level = format_level(level)
+        ignore[path] = level
         logging.getLogger(path).setLevel(level)
 
     logging.info(
