@@ -5,21 +5,10 @@ import json
 import sys
 import traceback
 import random
-
-try:
-    import xmlrunner
-except ImportError:
-    pass
-
-try:
-    from StringIO import StringIO
-except ImportError:
-    # Python 3 Support
-    from io import StringIO
-
-sys.path.append('src/python-json-logger')
-from pythonjsonlogger import jsonlogger
+from io import StringIO
 import datetime
+
+from trustpilot_logging import jsonlogger
 
 
 class TestJsonLogger(unittest.TestCase):
@@ -209,11 +198,3 @@ class TestJsonLogger(unittest.TestCase):
         msg = self.buffer.getvalue()
         self.assertEqual(msg, "{\"message\": \" message\", \"special\": [3.0, 8.0]}\n")
 
-if __name__ == '__main__':
-    if len(sys.argv[1:]) > 0:
-        if sys.argv[1] == 'xml':
-            testSuite = unittest.TestLoader().loadTestsFromTestCase(
-                TestJsonLogger)
-            xmlrunner.XMLTestRunner(output='reports').run(testSuite)
-    else:
-        unittest.main()

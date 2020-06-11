@@ -5,3 +5,7 @@ dist
 *.egg-info
 .tox/
 .env
+.venv
+__pycache__/
+*.py[cod]
+*$py.class

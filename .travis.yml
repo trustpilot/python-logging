@@ -1,10 +1,23 @@
 language: python
-dist: xenial
+
+cache: pip
+
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
   - "3.6"
   - "3.7"
-install: pip install tox-travis
-script: tox
+  - "3.8"
+
+before_install:
+  - pip install --upgrade pip
+  - pip install poetry
+
+install:
+  - poetry config virtualenvs.create false
+  - poetry install --verbose
+
+script:
+  - poetry run black --check .
+  - poetry run pytest -vvv tests
+
+notifications:
+  email: false
