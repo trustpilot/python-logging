@@ -36,6 +36,6 @@ def setup_logging(level="INFO", output=sys.stdout, ignore=None):
 
     for path, level in ignore:
         logging.getLogger(path).setLevel(level)
-    
+
     logging.info(f"Setup logging with level '{level}' ignored: {ignore}")
     return logging

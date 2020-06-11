@@ -1,7 +1,7 @@
-'''
+"""
 This library is provided to allow standard python logging
 to output log data as JSON formatted strings
-'''
+"""
 import logging
 import json
 import re
@@ -16,10 +16,29 @@ from collections import OrderedDict
 # skip natural LogRecord attributes
 # http://docs.python.org/library/logging.html#logrecord-attributes
 RESERVED_ATTRS = (
-    'args', 'asctime', 'created', 'exc_info', 'exc_text', 'filename',
-    'funcName', 'levelname', 'levelno', 'lineno', 'module',
-    'msecs', 'message', 'msg', 'name', 'pathname', 'process',
-    'processName', 'relativeCreated', 'stack_info', 'thread', 'threadName')
+    "args",
+    "asctime",
+    "created",
+    "exc_info",
+    "exc_text",
+    "filename",
+    "funcName",
+    "levelname",
+    "levelno",
+    "lineno",
+    "module",
+    "msecs",
+    "message",
+    "msg",
+    "name",
+    "pathname",
+    "process",
+    "processName",
+    "relativeCreated",
+    "stack_info",
+    "thread",
+    "threadName",
+)
 
 
 def merge_record_extra(record, target, reserved):
@@ -32,9 +51,9 @@ def merge_record_extra(record, target, reserved):
     """
     for key, value in record.__dict__.items():
         # this allows to have numeric keys
-        if (key not in reserved
-            and not (hasattr(key, "startswith")
-                     and key.startswith('_'))):
+        if key not in reserved and not (
+            hasattr(key, "startswith") and key.startswith("_")
+        ):
             target[key] = value
     return target
 
@@ -49,11 +68,9 @@ class JsonEncoder(json.JSONEncoder):
             return self.format_datetime_obj(obj)
 
         elif istraceback(obj):
-            return ''.join(traceback.format_tb(obj)).strip()
+            return "".join(traceback.format_tb(obj)).strip()
 
-        elif type(obj) == Exception \
-                or isinstance(obj, Exception) \
-                or type(obj) == type:
+        elif type(obj) == Exception or isinstance(obj, Exception) or type(obj) == type:
             return str(obj)
 
         try:
@@ -100,7 +117,9 @@ class JsonFormatter(logging.Formatter):
         """
         self.json_default = self._str_to_fn(kwargs.pop("json_default", None))
         self.json_encoder = self._str_to_fn(kwargs.pop("json_encoder", None))
-        self.json_serializer = self._str_to_fn(kwargs.pop("json_serializer", json.dumps))
+        self.json_serializer = self._str_to_fn(
+            kwargs.pop("json_serializer", json.dumps)
+        )
         self.json_indent = kwargs.pop("json_indent", None)
         self.json_ensure_ascii = kwargs.pop("json_ensure_ascii", True)
         self.prefix = kwargs.pop("prefix", "")
@@ -114,8 +133,7 @@ class JsonFormatter(logging.Formatter):
             self.json_encoder = JsonEncoder
 
         self._required_fields = self.parse()
-        self._skip_fields = dict(zip(self._required_fields,
-                                     self._required_fields))
+        self._skip_fields = dict(zip(self._required_fields, self._required_fields))
         self._skip_fields.update(self.reserved_attrs)
 
     def _str_to_fn(self, fn_as_str):
@@ -129,7 +147,7 @@ class JsonFormatter(logging.Formatter):
         if not isinstance(fn_as_str, str):
             return fn_as_str
 
-        path, _, function = fn_as_str.rpartition('.')
+        path, _, function = fn_as_str.rpartition(".")
         module = importlib.import_module(path)
         return getattr(module, function)
 
@@ -140,7 +158,7 @@ class JsonFormatter(logging.Formatter):
         This method is responsible for returning a list of fields (as strings)
         to include in all log messages.
         """
-        standard_formatters = re.compile(r'\((.+?)\)', re.IGNORECASE)
+        standard_formatters = re.compile(r"\((.+?)\)", re.IGNORECASE)
         return standard_formatters.findall(self._fmt)
 
     def add_fields(self, log_record, record, message_dict):
@@ -153,7 +171,7 @@ class JsonFormatter(logging.Formatter):
         merge_record_extra(record, log_record, reserved=self._skip_fields)
 
         if self.timestamp:
-            key = self.timestamp if type(self.timestamp) == str else 'timestamp'
+            key = self.timestamp if type(self.timestamp) == str else "timestamp"
             log_record[key] = datetime.utcnow()
 
     def process_log_record(self, log_record):
@@ -165,11 +183,13 @@ class JsonFormatter(logging.Formatter):
 
     def jsonify_log_record(self, log_record):
         """Returns a json string of the log record."""
-        return self.json_serializer(log_record,
-                                    default=self.json_default,
-                                    cls=self.json_encoder,
-                                    indent=self.json_indent,
-                                    ensure_ascii=self.json_ensure_ascii)
+        return self.json_serializer(
+            log_record,
+            default=self.json_default,
+            cls=self.json_encoder,
+            indent=self.json_indent,
+            ensure_ascii=self.json_ensure_ascii,
+        )
 
     def format(self, record):
         """Formats a log record and serializes to json"""
@@ -185,15 +205,15 @@ class JsonFormatter(logging.Formatter):
 
         # Display formatted exception, but allow overriding it in the
         # user-supplied dict.
-        if record.exc_info and not message_dict.get('exc_info'):
-            message_dict['exc_info'] = self.formatException(record.exc_info)
-        if not message_dict.get('exc_info') and record.exc_text:
-            message_dict['exc_info'] = record.exc_text
+        if record.exc_info and not message_dict.get("exc_info"):
+            message_dict["exc_info"] = self.formatException(record.exc_info)
+        if not message_dict.get("exc_info") and record.exc_text:
+            message_dict["exc_info"] = record.exc_text
         # Display formatted record of stack frames
         # default format is a string returned from :func:`traceback.print_stack`
         try:
-            if record.stack_info and not message_dict.get('stack_info'):
-                message_dict['stack_info'] = self.formatStack(record.stack_info)
+            if record.stack_info and not message_dict.get("stack_info"):
+                message_dict["stack_info"] = self.formatStack(record.stack_info)
         except AttributeError:
             # Python2.7 doesn't have stack_info.
             pass
