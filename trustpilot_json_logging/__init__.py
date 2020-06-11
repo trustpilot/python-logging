@@ -1,4 +1,5 @@
 import sys
+import json
 import logging
 from trustpilot_json_logging import jsonlogger
 
@@ -34,8 +35,10 @@ def setup_logging(level="INFO", output=sys.stdout, ignore=None):
     logger.setLevel(level)
     logger.addHandler(log_handler)
 
-    for path, level in ignore:
+    for path, level in ignore.items():
         logging.getLogger(path).setLevel(level)
 
-    logging.info(f"Setup logging with level '{level}' ignored: {ignore}")
+    logging.info(
+        f"Setup logging with level:{level}, ignore: [{', '.join('{}={}'.format(*item) for item in ignore.items())}]"
+    )
     return logging
