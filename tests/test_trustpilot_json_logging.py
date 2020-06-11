@@ -58,4 +58,3 @@ def test_uppercasing_if_string():
             "Severity": "INFO",
         },
     ]
-

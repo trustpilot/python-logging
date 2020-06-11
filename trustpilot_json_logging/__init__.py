@@ -35,7 +35,6 @@ def setup_logging(level="INFO", output=sys.stdout, ignore=None):
     level = format_level(level)
     ignore = ignore or {}
 
-
     logger = logging.getLogger()
     for h in logger.handlers:
         logger.removeHandler(h)
