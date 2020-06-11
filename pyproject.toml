@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "trustpilot-logging"
-version = "1.0.1"
+name = "trustpilot-json-logging"
+version = "1.0.4"
 description = "oppinionated json logger"
 authors = ["sloev <johanned.valbjorn@gmail.com>","Zakaria Zajac <zak@madzak.com>"]
 license = "BSD-2-Clause"
@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8"
 ]
 packages = [
-    { include = "trustpilot_logging" }
+    { include = "trustpilot_json_logging" }
 ]
 
 [tool.poetry.dependencies]

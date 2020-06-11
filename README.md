@@ -1,6 +1,6 @@
 # Trustpilot Logging
 
-[![Build Status](https://travis-ci.org/trustpilot/python-logging.svg?branch=master)](https://travis-ci.org/trustpilot/python-logging) [![Latest Version](https://img.shields.io/pypi/v/trustpilot-logging.svg)](https://pypi.python.org/pypi/trustpilot-logging) [![Python Support](https://img.shields.io/pypi/pyversions/trustpilot-logging.svg)](https://pypi.python.org/pypi/trustpilot-logging)
+[![Build Status](https://travis-ci.org/trustpilot/python-logging.svg?branch=master)](https://travis-ci.org/trustpilot/python-logging) [![Latest Version](https://img.shields.io/pypi/v/trustpilot-json-logging.svg)](https://pypi.python.org/pypi/trustpilot-json-logging) [![Python Support](https://img.shields.io/pypi/pyversions/trustpilot-json-logging.svg)](https://pypi.python.org/pypi/trustpilot-json-logging)
 
 Opinionated json logging module used by [Trustpilot](https://developers.trustpilot.com/), *( based on [python-json-logger](https://github.com/madzak/python-json-logger) by [madzak](https://github.com/madzak) )*
 
@@ -15,8 +15,8 @@ pip install trustpilot-logging
 ## Usage
 
 ```python
-import trustpilot_logging
-logging = trustpilot_logging.setup_logging()
+import trustpilot_json_logging
+logging = trustpilot_json_logging.setup_logging()
 
 logging.warning("i'm alive")
 
@@ -27,8 +27,8 @@ logging.warning("i'm alive")
 ## Advanced Usage
 
 ```python
-import trustpilot_logging
-logging = trustpilot_logging.setup_logging("INFO", sys.stderr, ignore={"elasticsearch":"WARNING"})
+import trustpilot_json_logging
+logging = trustpilot_json_logging.setup_logging("INFO", sys.stderr, ignore={"elasticsearch":"WARNING"})
 
 logging.info({
     "message": "i just arrived",

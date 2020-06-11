@@ -8,7 +8,7 @@ import random
 from io import StringIO
 import datetime
 
-from trustpilot_logging import jsonlogger
+from trustpilot_json_logging import jsonlogger
 
 
 class TestJsonLogger(unittest.TestCase):

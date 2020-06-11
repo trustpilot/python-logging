@@ -1,6 +1,6 @@
 import sys
 import logging
-from trustpilot_logging import jsonlogger
+from trustpilot_json_logging import jsonlogger
 
 
 class JSONFormatter(jsonlogger.JsonFormatter):
