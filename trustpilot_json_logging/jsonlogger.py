@@ -183,13 +183,19 @@ class JsonFormatter(logging.Formatter):
 
     def jsonify_log_record(self, log_record):
         """Returns a json string of the log record."""
-        return self.json_serializer(
-            log_record,
-            default=self.json_default,
-            cls=self.json_encoder,
-            indent=self.json_indent,
-            ensure_ascii=self.json_ensure_ascii,
-        )
+        try:
+            return self.json_serializer(
+                log_record,
+                default=self.json_default,
+                cls=self.json_encoder,
+                indent=self.json_indent,
+                ensure_ascii=self.json_ensure_ascii,
+            )
+        except ValueError as ex:
+            logging.warning(
+                f"Unable to serialise value for logging: {log_record} with error: {ex}"
+            )
+            return str(log_record)
 
     def format(self, record):
         """Formats a log record and serializes to json"""

@@ -205,3 +205,12 @@ class TestJsonLogger(unittest.TestCase):
         self.logger.info(" message", extra=value)
         msg = self.buffer.getvalue()
         self.assertEqual(msg, '{"message": " message", "special": [3.0, 8.0]}\n')
+
+    def testHandlesCircularSerialisationErrorsWithFallbackToStr(self):
+        record = {"foo": "bar"}
+        record["self"] = record
+
+        fr = jsonlogger.JsonFormatter()
+        results = fr.jsonify_log_record(record)
+
+        assert results == "{'foo': 'bar', 'self': {...}}"
