@@ -205,3 +205,19 @@ class TestJsonLogger(unittest.TestCase):
         self.logger.info(" message", extra=value)
         msg = self.buffer.getvalue()
         self.assertEqual(msg, '{"message": " message", "special": [3.0, 8.0]}\n')
+
+    def testHandlesSerialisationError(self):
+        fr = jsonlogger.JsonFormatter()
+        self.logHandler.setFormatter(fr)
+        circular = {}
+        circular["self"] = circular
+
+        self.logger.error({"message": "Here's a log", "log_data": circular})
+
+        outer_message = '{"message": "Unable to serialise value for logging", "log_record": %s, "exception": "ValueError: Circular reference detected"}\n'
+        inner_message = (
+            "\"{'message': \\\"Here's a log\\\", 'log_data': {'self': {...}}}\""
+        )
+        expected_message = outer_message % inner_message
+        logged_msg = self.buffer.getvalue()
+        self.assertEqual(logged_msg, expected_message)
