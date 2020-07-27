@@ -39,3 +39,16 @@ logging.info({
 # outputs
 # {"message": "i just arrived", "age": 32, "location": "north pole", "Module": "root", "Severity": "INFO"}
 ```
+
+
+## Publish new version
+
+To publish a new version:
+
+1. Make pr with
+  a. your changes
+  b. good linting: `black .` should be happy
+  c. bump [semantic version](https://github.com/trustpilot/python-logging/blob/master/pyproject.toml#L3)
+2. get pr reviewed
+3. merge to master
+4. pull master locally and run `poetry publish` with the TP pypi credentials
