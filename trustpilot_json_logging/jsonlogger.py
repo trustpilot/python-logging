@@ -192,16 +192,18 @@ class JsonFormatter(logging.Formatter):
                 ensure_ascii=self.json_ensure_ascii,
             )
         except Exception as ex:
-            message = f"Unable to serialise value for logging"
             try:
                 # Attempt to clean OrderedDict str format
                 log_record = str(dict(log_record))
             except:
                 log_record = str(log_record)
-            exception = f"{type(ex).__name__}: {ex}"
-            clean_record = dict(message=message, log_record=log_record, exception=exception)
+
             return self.json_serializer(
-                clean_record,
+                dict(
+                    message="Unable to serialise value for logging",
+                    log_record=log_record,
+                    exception=f"{type(ex).__name__}: {ex}",
+                ),
                 default=self.json_default,
                 cls=self.json_encoder,
                 indent=self.json_indent,
