@@ -221,4 +221,3 @@ class TestJsonLogger(unittest.TestCase):
         expected_message = outer_message % inner_message
         logged_msg = self.buffer.getvalue()
         self.assertEqual(logged_msg, expected_message)
-
