@@ -197,6 +197,7 @@ class JsonFormatter(logging.Formatter):
                 log_record = str(dict(log_record))
             except:
                 log_record = str(log_record)
+            log_record = log_record[:100]
 
             return self.json_serializer(
                 dict(
