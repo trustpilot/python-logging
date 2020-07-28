@@ -18,7 +18,7 @@ def test_advanced():
     lines = [json.loads(line) for line in output.split("\n") if line]
     assert lines == [
         {
-            "message": "Setup logging with level:WARNING, ignore: [elasticsearch=WARNING]",
+            "message": "Setup logging with level:INFO, ignore: [elasticsearch=WARNING]",
             "Module": "root",
             "Severity": "INFO",
         },
@@ -46,7 +46,7 @@ def test_uppercasing_if_string():
     lines = [json.loads(line) for line in output.split("\n") if line]
     assert lines == [
         {
-            "message": "Setup logging with level:WARNING, ignore: [elasticsearch=WARNING]",
+            "message": "Setup logging with level:INFO, ignore: [elasticsearch=WARNING]",
             "Module": "root",
             "Severity": "INFO",
         },
