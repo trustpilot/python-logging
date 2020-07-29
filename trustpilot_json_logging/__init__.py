@@ -45,10 +45,10 @@ def setup_logging(level="INFO", output=sys.stdout, ignore=None):
     logger.setLevel(level)
     logger.addHandler(log_handler)
 
-    for path, level in ignore.items():
-        level = format_level(level)
-        ignore[path] = level
-        logging.getLogger(path).setLevel(level)
+    for path, item_level in ignore.items():
+        item_level = format_level(item_level)
+        ignore[path] = item_level
+        logging.getLogger(path).setLevel(item_level)
 
     logging.info(
         f"Setup logging with level:{level}, ignore: [{', '.join('{}={}'.format(*item) for item in ignore.items())}]"
