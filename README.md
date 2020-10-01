@@ -9,7 +9,7 @@ Opinionated json logging module used by [Trustpilot](https://developers.trustpil
 Install the package from [PyPI](http://pypi.python.org/pypi/) using [pip](https://pip.pypa.io/):
 
 ```bash
-pip install trustpilot-logging
+pip install trustpilot-json-logging
 ```
 
 ## Usage
